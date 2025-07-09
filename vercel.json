@@ -1,4 +1,19 @@
 {
-  "rewrites": [
-    { "source": "/(.*)", "destination": "/api/manager" }
+  "version": 2,
+  "builds": [
+    {
+      "src": "api/webhook.py", // Lokasi file Vercel Function kamu
+      "use": "@vercel/python", // Menggunakan builder Python Vercel
+      "config": { "runtime": "python3.9" } // Versi runtime Python
+    }
+  ],
+  "routes": [
+    {
+      "src": "/telegram", // URL yang kamu berikan ke Telegram Bot API
+      "dest": "/api/webhook.py", // Mengarahkan ke file Vercel Function kamu
+      "methods": ["POST"] // Pastikan hanya menerima POST request dari Telegram
+    }
   ]
+  // Kamu tidak perlu "env" di sini jika semua secret kamu atur langsung di dashboard Vercel
+  // untuk TELEGRAM_BOT_TOKEN
+}
